@@ -2,8 +2,8 @@ import pygame
 import random
 
 class Obstaculo:
-    def __init__(self, nivel, width, altura_obstaculo, largura_obstaculo, velocidade):
-        self.x = random.randint(0, width - largura_obstaculo)
+    def __init__(self, nivel, largura, altura_obstaculo, largura_obstaculo, velocidade):
+        self.x = random.randint(0, largura - largura_obstaculo)
         self.y = -altura_obstaculo
         self.largura_obstaculo = largura_obstaculo
         self.altura_obstaculo = altura_obstaculo
@@ -24,8 +24,8 @@ class Obstaculo:
     def mover(self):
         self.y += self.velocidade
 
-    def fora_da_tela(self, height):
-        return self.y > height
+    def fora_da_tela(self, altura):
+        return self.y > altura
 
     def colidir(self, carro):
         if self.tipo == 'normal':

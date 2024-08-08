@@ -7,9 +7,9 @@ from poder import Poder
 
 pygame.init()
 
-width = 400
-height = 600
-tela = pygame.display.set_mode((width, height))
+largura = 400
+altura = 600
+tela = pygame.display.set_mode((largura, altura))
 pygame.display.set_caption("Jogo de Carro")
 
 
@@ -40,11 +40,11 @@ obstaculo_imagem = pygame.transform.scale(obstaculo_imagem, (largura_obstaculo, 
 poder_imagem = pygame.image.load('assets/image/poder.png')
 poder_imagem = pygame.transform.scale(poder_imagem, (largura_poder, altura_poder))
 
-carro = Carro(width, height, largura_carro, altura_carro, velocidade)
+carro = Carro(largura, altura, largura_carro, altura_carro, velocidade)
 obstaculos = []
 poderes = []
 score = Score()
-fundo = Fundo(width, height)
+fundo = Fundo(largura, altura)
 
 clock = pygame.time.Clock()
 while jogo_ativo:
@@ -65,13 +65,13 @@ while jogo_ativo:
 
     fundo.desenhar(tela)
     carro.mostrar(tela, carro_imagem, escudo)
-    carro.mover(width)
+    carro.mover(largura)
 
     if pygame.time.get_ticks() % max(30, 60 - score.nivel * 10) == 0:
-        obstaculos.append(Obstaculo(score.nivel, width, altura_obstaculo, largura_obstaculo, velocidade))
+        obstaculos.append(Obstaculo(score.nivel, largura, altura_obstaculo, largura_obstaculo, velocidade))
 
     if len(poderes) < score.nivel:
-        poderes.append(Poder(width, altura_poder, largura_poder, velocidade))
+        poderes.append(Poder(largura, altura_poder, largura_poder, velocidade))
 
     for obstaculo in obstaculos[:]:
         obstaculo.mostrar(tela, obstaculo_imagem)
@@ -83,7 +83,7 @@ while jogo_ativo:
             else:
                 jogo_ativo = False
                 game_over = True
-        elif obstaculo.fora_da_tela(height):
+        elif obstaculo.fora_da_tela(altura):
             obstaculos.remove(obstaculo)
             score.aumentar_pontuacao()
 
@@ -94,17 +94,17 @@ while jogo_ativo:
             barulho_poder.play()
             poderes.remove(poder)
             escudo = True
-        elif poder.fora_da_tela(height):
+        elif poder.fora_da_tela(altura):
             poderes.remove(poder)
 
     velocidade = score.verificar_nivel(velocidade)
-    score.mostrar_pontuacao_nivel(tela, width, height)
+    score.mostrar_pontuacao_nivel(tela, largura, altura)
 
     pygame.display.flip()
     clock.tick(60)
 
     if game_over:
-        score.mostrar_game_over(tela, width, height)
+        score.mostrar_game_over(tela, largura, altura)
         jogo_ativo = False
 
 pygame.quit()

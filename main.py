@@ -3,7 +3,7 @@ from score import Score
 from fundo import Fundo
 from carro import Carro
 from obstaculo import Obstaculo
-from poder import Poder
+from poder import Poder, Newpoder  # Certifique-se de importar a subclasse Newpoder
 
 pygame.init()
 
@@ -12,7 +12,6 @@ altura = 600
 tela = pygame.display.set_mode((largura, altura))
 pygame.display.set_caption("Jogo de Carro")
 
-
 velocidade = 5
 largura_carro = 50
 altura_carro = 100
@@ -20,6 +19,7 @@ largura_obstaculo = 50
 altura_obstaculo = 50
 largura_poder = 50
 altura_poder = 50
+aumento_velocidade = 2
 jogo_ativo = True
 game_over = False
 escudo = False
@@ -40,13 +40,13 @@ obstaculo_imagem = pygame.transform.scale(obstaculo_imagem, (largura_obstaculo, 
 poder_imagem = pygame.image.load('assets/image/poder.png')
 poder_imagem = pygame.transform.scale(poder_imagem, (largura_poder, altura_poder))
 
-new_poder = pygame.image.load('assets/image/new.png')
-new_poder = pygame.transform.scale(new_poder, (largura_poder, altura_poder))
-
+new_poder_imagem = pygame.image.load('assets/image/new.png')
+new_poder_imagem = pygame.transform.scale(new_poder_imagem, (largura_poder, altura_poder))
 
 carro = Carro(largura, altura, largura_carro, altura_carro, velocidade)
 obstaculos = []
 poderes = []
+new_poderes = []  # Lista para armazenar o novo poder
 score = Score()
 fundo = Fundo(largura, altura)
 
@@ -77,6 +77,10 @@ while jogo_ativo:
     if len(poderes) < score.nivel:
         poderes.append(Poder(largura, altura_poder, largura_poder, velocidade))
 
+    # Gerar o novo poder baseado no nível
+    if len(new_poderes) < (score.nivel // 2):
+        new_poderes.append(Newpoder(largura, altura_poder, largura_poder, velocidade, aumento_velocidade))
+
     for obstaculo in obstaculos[:]:
         obstaculo.mostrar(tela, obstaculo_imagem)
         obstaculo.mover()
@@ -100,6 +104,17 @@ while jogo_ativo:
             escudo = True
         elif poder.fora_da_tela(altura):
             poderes.remove(poder)
+
+    # Mostrar e mover o novo poder
+    for new_poder in new_poderes[:]:
+        new_poder.mostrar(tela, new_poder_imagem)
+        new_poder.mover()
+        if new_poder.colidir(carro):
+            barulho_poder.play()
+            new_poderes.remove(new_poder)
+            new_poder.aplicar_efeito(carro)  # Aplica o efeito de aumento de velocidade ao carro
+        elif new_poder.fora_da_tela(altura):
+            new_poderes.remove(new_poder)
 
     velocidade = score.verificar_nivel(velocidade)
     score.mostrar_pontuacao_nivel(tela, largura, altura)

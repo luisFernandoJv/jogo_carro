@@ -27,11 +27,10 @@ class Newpoder(Poder):
         self.aumento_velocidade = aumento_velocidade
 
     def aplicar_efeito(self, carro):
-        # Aumenta a velocidade no eixo X do carro ao acumular o poder
         carro.velocidade += self.aumento_velocidade
 
     def mostrar(self, tela, new_poder_imagem):
-        # Usa a imagem específica do novo poder para exibir na tela
+
         tela.blit(new_poder_imagem, (self.x, self.y))
 
     def colidir_com_obstaculo(self, obstaculo):

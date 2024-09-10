@@ -2,8 +2,8 @@ import pygame
 from score import Score
 from fundo import Fundo
 from carro import Carro
-from obstaculo import Obstaculo
-from poder import Poder, Newpoder  # Certifique-se de importar a subclasse Newpoder
+from obstaculo import Obstaculo, Lento
+from poder import Poder, Newpoder
 
 pygame.init()
 
@@ -37,6 +37,9 @@ carro_imagem = pygame.transform.scale(carro_imagem, (largura_carro, altura_carro
 obstaculo_imagem = pygame.image.load('assets/image/obstaculo.png')
 obstaculo_imagem = pygame.transform.scale(obstaculo_imagem, (largura_obstaculo, altura_obstaculo))
 
+lento_imagem = pygame.image.load('assets/image/lento.png')
+lento_imagem = pygame.transform.scale(lento_imagem, (largura_obstaculo, altura_obstaculo))
+
 poder_imagem = pygame.image.load('assets/image/poder.png')
 poder_imagem = pygame.transform.scale(poder_imagem, (largura_poder, altura_poder))
 
@@ -46,7 +49,7 @@ new_poder_imagem = pygame.transform.scale(new_poder_imagem, (largura_poder, altu
 carro = Carro(largura, altura, largura_carro, altura_carro, velocidade)
 obstaculos = []
 poderes = []
-new_poderes = []  # Lista para armazenar o novo poder
+new_poderes = [] 
 score = Score()
 fundo = Fundo(largura, altura)
 
@@ -71,26 +74,36 @@ while jogo_ativo:
     carro.mostrar(tela, carro_imagem, escudo)
     carro.mover(largura)
 
+    # Adiciona obstáculos baseados no nível atual
     if pygame.time.get_ticks() % max(30, 60 - score.nivel * 10) == 0:
-        obstaculos.append(Obstaculo(score.nivel, largura, altura_obstaculo, largura_obstaculo, velocidade))
+        if score.nivel % 2 == 0:  # Adiciona os dois tipos de obstáculos em fases pares
+            obstaculos.append(Lento(score.nivel, largura, altura_obstaculo, largura_obstaculo, velocidade))
+            obstaculos.append(Obstaculo(score.nivel, largura, altura_obstaculo, largura_obstaculo, velocidade))
+        else:
+            obstaculos.append(Obstaculo(score.nivel, largura, altura_obstaculo, largura_obstaculo, velocidade))
 
     if len(poderes) < score.nivel:
         poderes.append(Poder(largura, altura_poder, largura_poder, velocidade))
 
-    # Gerar o novo poder baseado no nível
     if len(new_poderes) < (score.nivel // 2):
         new_poderes.append(Newpoder(largura, altura_poder, largura_poder, velocidade, aumento_velocidade))
 
     for obstaculo in obstaculos[:]:
-        obstaculo.mostrar(tela, obstaculo_imagem)
+        if obstaculo.tipo == 'lento':
+            obstaculo.mostrar(tela, lento_imagem)
+        else:
+            obstaculo.mostrar(tela, obstaculo_imagem)
         obstaculo.mover()
         if obstaculo.colidir(carro):
-            if escudo:
-                obstaculos.remove(obstaculo)
-                escudo = False
+            if escudo:  # Se o carro tem um escudo
+                obstaculos.remove(obstaculo)  # Remove o obstáculo
+                escudo = False  # Desativa o escudo
             else:
-                jogo_ativo = False
-                game_over = True
+                if obstaculo.tipo == 'lento':
+                    obstaculo.efeito(carro)
+                else:
+                    jogo_ativo = False
+                    game_over = True
         elif obstaculo.fora_da_tela(altura):
             obstaculos.remove(obstaculo)
             score.aumentar_pontuacao()
@@ -105,14 +118,13 @@ while jogo_ativo:
         elif poder.fora_da_tela(altura):
             poderes.remove(poder)
 
-    # Mostrar e mover o novo poder
     for new_poder in new_poderes[:]:
         new_poder.mostrar(tela, new_poder_imagem)
         new_poder.mover()
         if new_poder.colidir(carro):
             barulho_poder.play()
             new_poderes.remove(new_poder)
-            new_poder.aplicar_efeito(carro)  # Aplica o efeito de aumento de velocidade ao carro
+            new_poder.aplicar_efeito(carro) 
         elif new_poder.fora_da_tela(altura):
             new_poderes.remove(new_poder)
 

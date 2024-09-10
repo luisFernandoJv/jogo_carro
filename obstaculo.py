@@ -34,3 +34,5 @@ class Obstaculo:
             return not (carro.x + carro.largura_carro < self.x or carro.x > self.x + 2 * self.largura_obstaculo + 10 or carro.y > self.y + self.altura_obstaculo or carro.y + carro.altura_carro < self.y)
         elif self.tipo == 'triplo':
             return not (carro.x + carro.largura_carro < self.x or carro.x > self.x + 3 * self.largura_obstaculo + 20 or carro.y > self.y + self.altura_obstaculo or carro.y + carro.altura_carro < self.y)
+class Obstaculo_2(Obstaculo):
+    ...

@@ -40,6 +40,10 @@ obstaculo_imagem = pygame.transform.scale(obstaculo_imagem, (largura_obstaculo, 
 poder_imagem = pygame.image.load('assets/image/poder.png')
 poder_imagem = pygame.transform.scale(poder_imagem, (largura_poder, altura_poder))
 
+new_poder = pygame.image.load('assets/image/new.png')
+new_poder = pygame.transform.scale(new_poder, (largura_poder, altura_poder))
+
+
 carro = Carro(largura, altura, largura_carro, altura_carro, velocidade)
 obstaculos = []
 poderes = []

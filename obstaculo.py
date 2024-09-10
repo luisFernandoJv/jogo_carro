@@ -49,4 +49,4 @@ class Lento(Obstaculo):
         tela.blit(lento_imagem, (self.x, self.y))
         
     def efeito(self, carro):
-        carro.velocidade = max(carro.velocidade - 10, 1)  # Diminui a velocidade do carro, mas não deixa ela menor que 1
+        carro.velocidade = max(carro.velocidade - 10, 1) 

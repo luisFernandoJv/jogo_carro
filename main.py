@@ -34,13 +34,13 @@ barulho_poder.set_volume(0.9)
 carro_imagem = pygame.image.load('assets/image/carro.png')
 carro_imagem = pygame.transform.scale(carro_imagem, (largura_carro, altura_carro))
 
-obstaculo_imagem = pygame.image.load('assets/image/obstaculo.png')
+obstaculo_imagem = pygame.image.load('assets/image/obt.png')
 obstaculo_imagem = pygame.transform.scale(obstaculo_imagem, (largura_obstaculo, altura_obstaculo))
 
 lento_imagem = pygame.image.load('assets/image/lento.png')
 lento_imagem = pygame.transform.scale(lento_imagem, (largura_obstaculo, altura_obstaculo))
 
-poder_imagem = pygame.image.load('assets/image/poder.png')
+poder_imagem = pygame.image.load('assets/image/escudo.png')
 poder_imagem = pygame.transform.scale(poder_imagem, (largura_poder, altura_poder))
 
 new_poder_imagem = pygame.image.load('assets/image/new.png')
@@ -74,9 +74,9 @@ while jogo_ativo:
     carro.mostrar(tela, carro_imagem, escudo)
     carro.mover(largura)
 
-    # Adiciona obstáculos baseados no nível atual
+
     if pygame.time.get_ticks() % max(30, 60 - score.nivel * 10) == 0:
-        if score.nivel % 2 == 0:  # Adiciona os dois tipos de obstáculos em fases pares
+        if score.nivel % 2 == 0: 
             obstaculos.append(Lento(score.nivel, largura, altura_obstaculo, largura_obstaculo, velocidade))
             obstaculos.append(Obstaculo(score.nivel, largura, altura_obstaculo, largura_obstaculo, velocidade))
         else:
@@ -95,9 +95,9 @@ while jogo_ativo:
             obstaculo.mostrar(tela, obstaculo_imagem)
         obstaculo.mover()
         if obstaculo.colidir(carro):
-            if escudo:  # Se o carro tem um escudo
-                obstaculos.remove(obstaculo)  # Remove o obstáculo
-                escudo = False  # Desativa o escudo
+            if escudo:  
+                obstaculos.remove(obstaculo)  
+                escudo = False  
             else:
                 if obstaculo.tipo == 'lento':
                     obstaculo.efeito(carro)

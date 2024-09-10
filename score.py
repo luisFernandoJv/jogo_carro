@@ -9,9 +9,9 @@ class Score:
 
     def mostrar_pontuacao_nivel(self, tela, largura, altura):
         fonte = pygame.font.Font(None, 40)
-        texto_pontuacao = fonte.render(f"Pontuação: {self.pontuacao}", True, (0, 0, 0))
+        texto_pontuacao = fonte.render(f"Pontuação: {self.pontuacao}", True, (255, 255, 255))
         tela.blit(texto_pontuacao, (largura - 10 - texto_pontuacao.get_width(), 10))
-        texto_nivel = fonte.render(f"Nível: {self.nivel}", True, (0, 0, 0))
+        texto_nivel = fonte.render(f"Nível: {self.nivel}", True, (255, 255, 255))
         tela.blit(texto_nivel, (largura - 10 - texto_nivel.get_width(), 40))
 
         if self.mensagem_nivel:
@@ -33,16 +33,16 @@ class Score:
         return velocidade
 
     def mostrar_game_over(self, tela, largura, altura):
-        tela.fill((25, 25, 25))
-        fonte = pygame.font.Font(None, 80)
+        tela.fill((255, 255, 255))
+        fonte = pygame.font.Font(None, 100)
         texto_game_over = fonte.render("Game Over", True, (255, 0, 0))
         tela.blit(texto_game_over, (largura // 2 - texto_game_over.get_width() // 2, altura // 2 - texto_game_over.get_height() // 2))
 
-        fonte_pequena = pygame.font.Font(None, 36)
-        texto_pontuacao_final = fonte_pequena.render(f"Pontuação Final: {self.pontuacao}", True, (0, 0, 255))
+        fonte_pequena = pygame.font.Font(None, 50)
+        texto_pontuacao_final = fonte_pequena.render(f"Pontuação Final: {self.pontuacao}", True, (0, 0, 0))
         tela.blit(texto_pontuacao_final, (largura // 2 - texto_pontuacao_final.get_width() // 2, altura // 2 + 50))
 
-        texto_nivel_final = fonte_pequena.render(f"Nível Atingido: {self.nivel}", True, (0, 255, 0))
+        texto_nivel_final = fonte_pequena.render(f"Nível Atingido: {self.nivel}", True, (255, 0, 0))
         tela.blit(texto_nivel_final, (largura // 2 - texto_nivel_final.get_width() // 2, altura // 2 + 90))
 
         pygame.display.flip()

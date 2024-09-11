@@ -37,9 +37,8 @@ class Obstaculo:
             return not (carro.x + carro.largura_carro < self.x or carro.x > self.x + 3 * self.largura_obstaculo + 20 or carro.y > self.y + self.altura_obstaculo or carro.y + carro.altura_carro < self.y)
         elif self.tipo == 'lento':
             return not (carro.x + carro.largura_carro < self.x or carro.x > self.x + self.largura_obstaculo or carro.y > self.y + self.altura_obstaculo or carro.y + carro.altura_carro < self.y)
-        elif self.tipo == 'game_over':
-            return not (carro.x + carro.largura_carro < self.x or carro.x > self.x + self.largura_obstaculo or carro.y > self.y + self.altura_obstaculo or carro.y + carro.altura_carro < self.y)
-
+        
+        
 class Lento(Obstaculo):
     def __init__(self, nivel, largura, altura_obstaculo, largura_obstaculo, velocidade):
         super().__init__(nivel, largura, altura_obstaculo, largura_obstaculo, velocidade)

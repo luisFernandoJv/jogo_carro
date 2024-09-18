@@ -10,7 +10,7 @@ pygame.init()
 largura = 400
 altura = 600
 tela = pygame.display.set_mode((largura, altura))
-pygame.display.set_caption("Jogo de Carro")
+pygame.display.set_caption("Pista Turbulenta")
 
 velocidade = 5
 largura_carro = 50

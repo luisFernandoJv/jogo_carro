@@ -8,11 +8,19 @@ class Score:
         self.tempo_mensagem = 0
 
     def mostrar_pontuacao_nivel(self, tela, largura, altura):
-        fonte = pygame.font.Font(None, 40)
+        fonte = pygame.font.Font(None, 30) 
         texto_pontuacao = fonte.render(f"Pontuação: {self.pontuacao}", True, (255, 255, 255))
-        tela.blit(texto_pontuacao, (largura - 10 - texto_pontuacao.get_width(), 10))
         texto_nivel = fonte.render(f"Nível: {self.nivel}", True, (255, 255, 255))
-        tela.blit(texto_nivel, (largura - 10 - texto_nivel.get_width(), 40))
+
+        largura_telinha = max(texto_pontuacao.get_width(), texto_nivel.get_width()) + 10
+        altura_telinha = texto_pontuacao.get_height() + texto_nivel.get_height() + 10
+
+     
+        pygame.draw.rect(tela, (0, 0, 0), (largura - largura_telinha - 10, 10, largura_telinha, altura_telinha))
+        pygame.draw.rect(tela, (255, 255, 255), (largura - largura_telinha - 10, 10, largura_telinha, altura_telinha), 1)
+
+        tela.blit(texto_pontuacao, (largura - largura_telinha - 5, 15))
+        tela.blit(texto_nivel, (largura - largura_telinha - 5, 40))
 
         if self.mensagem_nivel:
             if pygame.time.get_ticks() - self.tempo_mensagem < 3000:

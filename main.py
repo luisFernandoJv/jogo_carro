@@ -76,7 +76,7 @@ while jogo_ativo:
 
 
     if pygame.time.get_ticks() % max(30, 60 - score.nivel * 10) == 0:
-        if score.nivel % 2 == 0: 
+        if score.nivel % 1 == 0: 
             obstaculos.append(Lento(score.nivel, largura, altura_obstaculo, largura_obstaculo, velocidade))
             obstaculos.append(Obstaculo(score.nivel, largura, altura_obstaculo, largura_obstaculo, velocidade))
         else:

@@ -6,6 +6,7 @@ class Obstaculo:
         self.y = -altura_obstaculo
         self.largura_obstaculo = largura_obstaculo
         self.altura_obstaculo = altura_obstaculo
+        self.tipo = 'lento'
         self.tipo = random.choice(['normal', 'duplo', 'triplo', 'game_over']) if nivel > 1 else 'normal'
         self.velocidade = random.randint(velocidade, velocidade + 3) if nivel > 2 else velocidade
 
@@ -42,7 +43,7 @@ class Obstaculo:
 class Lento(Obstaculo):
     def __init__(self, nivel, largura, altura_obstaculo, largura_obstaculo, velocidade):
         super().__init__(nivel, largura, altura_obstaculo, largura_obstaculo, velocidade)
-        self.tipo = 'lento'
+        
     
     def mostrar(self, tela, lento_imagem):
         tela.blit(lento_imagem, (self.x, self.y))

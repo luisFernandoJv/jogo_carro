@@ -39,3 +39,21 @@ class Newpoder(Poder):
                     obstaculo.y > self.y + self.altura_poder or
                     obstaculo.y + obstaculo.altura < self.y)
 
+
+class Combustivel(Poder):
+    def __init__(self, largura, altura_poder, largura_poder, velocidade, aumento_velocidade):
+        super().__init__(largura, altura_poder, largura_poder, velocidade)
+        self.aumento_velocidade = aumento_velocidade
+
+    def aplicar_efeito(self, carro):
+        carro.velocidade += random.choice([2, 10, 5, 1, 3, 5, 4, 7, 9])
+
+    def mostrar(self, tela, combustivel):
+        tela.blit(combustivel, (self.x, self.y))
+
+    def colidir_com_obstaculo(self, obstaculo):
+        return not (obstaculo.x + obstaculo.largura < self.x or
+                    obstaculo.x > self.x + self.largura_poder or
+                    obstaculo.y > self.y + self.altura_poder or
+                    obstaculo.y + obstaculo.altura < self.y)
+

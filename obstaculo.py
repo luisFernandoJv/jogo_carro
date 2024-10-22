@@ -7,7 +7,8 @@ class Obstaculo:
         self.largura_obstaculo = largura_obstaculo
         self.altura_obstaculo = altura_obstaculo
         self.tipo = 'lento'
-        self.tipo = random.choice(['normal', 'duplo', 'triplo', 'game_over']) if nivel > 1 else 'normal'
+        self.tipo = 'quebra'
+        self.tipo = random.choice(['normal', 'duplo', 'triplo', 'lento', 'quebra']) if nivel > 1 else 'normal'
         self.velocidade = random.randint(velocidade, velocidade + 3) if nivel > 2 else velocidade
 
     def mostrar(self, tela, obstaculo_imagem, game_over_imagem=None):
@@ -20,8 +21,6 @@ class Obstaculo:
             tela.blit(obstaculo_imagem, (self.x, self.y))
             tela.blit(obstaculo_imagem, (self.x + self.largura_obstaculo + 10, self.y))
             tela.blit(obstaculo_imagem, (self.x + 2 * (self.largura_obstaculo + 10), self.y))
-        elif self.tipo == 'game_over' and game_over_imagem:
-            tela.blit(game_over_imagem, (self.x, self.y))
 
     def mover(self):
         self.y += self.velocidade
@@ -50,3 +49,14 @@ class Lento(Obstaculo):
         
     def efeito(self, carro):
         carro.velocidade = max(carro.velocidade - 10, 1) 
+        
+class ZeroCombustivel(Obstaculo):
+    def __init__(self, nivel, largura, altura_obstaculo, largura_obstaculo, velocidade):
+        super().__init__(nivel, largura, altura_obstaculo, largura_obstaculo, velocidade)
+        
+    def mostrar(self, tela, quebra_mola_imagem):
+        tela.blit(quebra_mola_imagem, (self.x, self.y))
+
+    def efeito(self, carro):
+        carro.velocidade = 0 
+          

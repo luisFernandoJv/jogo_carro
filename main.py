@@ -2,8 +2,8 @@ import pygame
 from score import Score
 from fundo import Fundo
 from carro import Carro
-from obstaculo import Obstaculo, Lento
-from poder import Poder, Newpoder
+from obstaculo import Obstaculo, Lento, ZeroCombustivel
+from poder import Poder, Newpoder, Combustivel
 
 pygame.init()
 
@@ -46,10 +46,17 @@ poder_imagem = pygame.transform.scale(poder_imagem, (largura_poder, altura_poder
 new_poder_imagem = pygame.image.load('assets/image/new.png')
 new_poder_imagem = pygame.transform.scale(new_poder_imagem, (largura_poder, altura_poder))
 
+quebra_mola_imagem = pygame.image.load('assets/image/Ob2.png')
+quebra_mola_imagem = pygame.transform.scale(quebra_mola_imagem, (largura_poder, altura_poder))
+
+combustivel_imagem = pygame.image.load('assets/image/combustivel.png')
+combustivel_imagem = pygame.transform.scale(combustivel_imagem, (largura_poder, altura_poder))
+
 carro = Carro(largura, altura, largura_carro, altura_carro, velocidade)
 obstaculos = []
 poderes = []
 new_poderes = [] 
+combustives = []
 score = Score()
 fundo = Fundo(largura, altura)
 
@@ -76,7 +83,8 @@ while jogo_ativo:
 
 
     if pygame.time.get_ticks() % max(30, 60 - score.nivel * 10) == 0:
-        if score.nivel % 1 == 0: 
+        if score.nivel % 2 == 0: 
+            obstaculos.append(ZeroCombustivel(score.nivel, largura, altura_obstaculo, largura_obstaculo, velocidade))
             obstaculos.append(Lento(score.nivel, largura, altura_obstaculo, largura_obstaculo, velocidade))
             obstaculos.append(Obstaculo(score.nivel, largura, altura_obstaculo, largura_obstaculo, velocidade))
         else:
@@ -88,11 +96,19 @@ while jogo_ativo:
     if len(new_poderes) < (score.nivel // 2):
         new_poderes.append(Newpoder(largura, altura_poder, largura_poder, velocidade, aumento_velocidade))
 
+    if len(combustives) < (score.nivel // 2):
+        combustives.append(Combustivel(largura, altura_poder, largura_poder, velocidade, aumento_velocidade))
+    
     for obstaculo in obstaculos[:]:
+
         if obstaculo.tipo == 'lento':
             obstaculo.mostrar(tela, lento_imagem)
+            
+        if obstaculo.tipo == 'quebra':
+            obstaculo.mostrar(tela, quebra_mola_imagem)
         else:
             obstaculo.mostrar(tela, obstaculo_imagem)
+
         obstaculo.mover()
         if obstaculo.colidir(carro):
             if escudo:  
@@ -127,6 +143,16 @@ while jogo_ativo:
             new_poder.aplicar_efeito(carro) 
         elif new_poder.fora_da_tela(altura):
             new_poderes.remove(new_poder)
+            
+    for combustivel in combustives[:]:
+        combustivel.mostrar(tela, combustivel_imagem)
+        combustivel.mover()
+        if combustivel.colidir(carro):
+            barulho_poder.play()
+            combustives.remove(combustivel)
+            combustivel.aplicar_efeito(carro) 
+        elif combustivel.fora_da_tela(altura):
+            combustives.remove(combustivel)
 
     velocidade = score.verificar_nivel(velocidade)
     score.mostrar_pontuacao_nivel(tela, largura, altura)

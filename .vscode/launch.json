@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/luis/jogo_carro/traducao_c++/teste",
-      "program": "/home/luis/jogo_carro/traducao_c++/teste/build/Debug/outDebug",
+      "cwd": "/home/luis/jogo_carro/C++",
+      "program": "/home/luis/jogo_carro/C++/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

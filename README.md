@@ -15,7 +15,12 @@
 
 <br>
 
-<img src="https://github.com/user-attachments/assets/ffd3ac90-16cb-411f-a25e-39e42fe31301" alt="Gameplay Pista Turbulenta" width="600" style="border-radius: 10px; box-shadow: 0px 4px 10px rgba(0,0,0,0.5);">
+<table>
+  <tr>
+    <td><img width="300" alt="Gameplay 1" src="https://github.com/user-attachments/assets/2510bea9-cc52-4ff9-b158-2984dbf68461" /></td>
+    <td><img width="300" alt="Gameplay 2" src="https://github.com/user-attachments/assets/207d5b82-66e5-4b3f-866d-31b34f7b2bbf" /></td>
+  </tr>
+</table>
 
 </div>
 
@@ -48,13 +53,13 @@ jogo_carro/
 
 ### Padrões aplicados
 
-| Conceito           | Como foi aplicado                                                                                       |
-| ------------------ | ------------------------------------------------------------------------------------------------------- |
-| **Herança**        | `Lento` e `ZeroCombustivel` estendem `Obstaculo`; `Newpoder` e `Combustivel` estendem `Poder`           |
-| **Polimorfismo**   | `mostrar()` e `efeito()` sobrescritos em cada subclasse — o game loop não precisa saber o tipo concreto |
-| **Encapsulamento** | Cada classe gerencia seu próprio estado interno (posição, velocidade, timer)                            |
-| **SRP**            | Uma classe, uma responsabilidade — `Score` não mexe em física; `Carro` não sabe do placar               |
-| **Event-driven**   | Spawn de obstáculos e power-ups via `pygame.USEREVENT` — desacoplado do game loop                       |
+| Conceito | Como foi aplicado |
+|---|---|
+| **Herança** | `Lento` e `ZeroCombustivel` estendem `Obstaculo`; `Newpoder` e `Combustivel` estendem `Poder` |
+| **Polimorfismo** | `mostrar()` e `efeito()` sobrescritos em cada subclasse — o game loop não precisa saber o tipo concreto |
+| **Encapsulamento** | Cada classe gerencia seu próprio estado interno (posição, velocidade, timer) |
+| **SRP** | Uma classe, uma responsabilidade — `Score` não mexe em física; `Carro` não sabe do placar |
+| **Event-driven** | Spawn de obstáculos e power-ups via `pygame.USEREVENT` — desacoplado do game loop |
 
 ---
 
@@ -76,18 +81,18 @@ modularização por arquivo  →  separação por pacotes (domain, service, infr
 
 ## 🎮 Controles
 
-|      Tecla       | Ação           |
-| :--------------: | :------------- |
-|      `← →`       | Mover o carro  |
-|      `ESC`       | Voltar ao menu |
-| `ENTER / ESPAÇO` | Iniciar jogo   |
+| Tecla | Ação |
+|:---:|:---|
+| `← →` | Mover o carro |
+| `ESC` | Voltar ao menu |
+| `ENTER / ESPAÇO` | Iniciar jogo |
 
 ### Power-ups
 
-|     Ícone      | Efeito                               |
-| :------------: | :----------------------------------- |
-|   🛡️ Escudo    | Protege de uma colisão fatal         |
-|    ⚡ Turbo    | Aumenta a velocidade do carro        |
+| Ícone | Efeito |
+|:---:|:---|
+| 🛡️ Escudo | Protege de uma colisão fatal |
+| ⚡ Turbo | Aumenta a velocidade do carro |
 | ⛽ Combustível | Aplica boost aleatório de velocidade |
 
 ---
